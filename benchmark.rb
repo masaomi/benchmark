@@ -1,10 +1,9 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
-Version = '20130225-102549'
+Version = '20130225-161213'
 
-ELEMENTS = 8100
-#TIMES = 100000
-TIMES = 1000
+ELEMENTS = 10000
+TIMES = 100000
 
 require 'benchmark'
 def benchmark(a1, a2)
@@ -73,7 +72,6 @@ class Array
   end
 end
 
-
 a1 = Array.new(ELEMENTS){|i| i+1.0}
 a2 = Array.new(ELEMENTS){|i| i+5.0}
 n = Math.sqrt(ELEMENTS)
@@ -87,16 +85,18 @@ m2 = []
 m1 << a1.slice!(0,n) while !a1.empty?
 m2 << a2.slice!(0,n) while !a2.empty?
 
+=begin
 puts "CArray"
 benchmark(m1, m2)
 puts
+=end
 
 require 'gsl'
 a1 = Array.new(ELEMENTS){|i| i+1.0}
 a2 = Array.new(ELEMENTS){|i| i+5.0}
 gm1 = GSL::Matrix.alloc(a1, n, n)
 gm2 = GSL::Matrix.alloc(a2, n, n)
-puts "GSL::Vector"
+puts "GSL::Matrix"
 benchmark(gm1, gm2)
 puts
 
